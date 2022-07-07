@@ -17,10 +17,12 @@ const styles = {
 };
 
 function App() {
-  const { xml, chosenStructure } = useStore();
+  const { xml, chosenStructure, setStructure } = useStore();
 
   const handleClick = () => {
-    if (getXmlStructure(xml) === chosenStructure) {
+    const str = getXmlStructure(xml);
+    if (str.join("/") === chosenStructure) {
+      setStructure(str);
       console.log("Match");
     } else {
       console.log("Not match");
