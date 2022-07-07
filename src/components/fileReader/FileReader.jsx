@@ -4,11 +4,14 @@ import XMLParser from "react-xml-parser";
 
 import FilesDragAndDrop from "./FilesDragAndDrop";
 import FilesInput from "./FilesInput";
+import { useStore } from "../../store/StoreContext";
 
 const FileReaderComponnent = (props) => {
   const [file, setFile] = useState();
   const [fileContent, setFileContent] = useState("");
   const [error, setError] = useState(null);
+
+  const { xml, setXml } = useStore();
 
   const onUpload = (files) => {
     console.log("onUpload", files[0]);
@@ -23,6 +26,7 @@ const FileReaderComponnent = (props) => {
       reader.onload = async (e) => {
         const text = e.target.result;
         setFileContent(new XMLParser().parseFromString(text));
+        setXml(new XMLParser().parseFromString(text));
       };
       reader.readAsText(files[0]);
     } catch (err) {
@@ -36,6 +40,7 @@ const FileReaderComponnent = (props) => {
     console.log("Filed removed");
     setFile(null);
     setFileContent(null);
+    setXml(null);
   };
 
   return (
@@ -53,7 +58,7 @@ const FileReaderComponnent = (props) => {
         removeFile={removeFile}
       />
 
-      <pre>{JSON.stringify(fileContent, undefined, 4)}</pre>
+      {/* <pre>{JSON.stringify(fileContent, undefined, 4)}</pre> */}
       {console.log(fileContent)}
     </FileReacerWrapper>
   );
@@ -62,13 +67,13 @@ const FileReaderComponnent = (props) => {
 export default FileReaderComponnent;
 
 const FileReacerWrapper = styled.div`
-  max-width: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
   gap: 15px;
-
+  height: 100%;
   pre {
     /* max-width: 70vh; */
   }

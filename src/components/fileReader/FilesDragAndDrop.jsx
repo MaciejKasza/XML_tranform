@@ -79,6 +79,7 @@ const FilesDragAndDropContainer = styled.div`
   color: #555555;
   border: 2px #c3c3c3 dashed;
   border-radius: 12px;
+  text-align: center;
 
   &.error {
     animation-name: errorAnim;
